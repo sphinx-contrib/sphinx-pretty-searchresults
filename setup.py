@@ -3,7 +3,8 @@ import codecs, setuptools
 
 setuptools.setup(
     name='sphinxprettysearchresults',
-    version='0.1',
+    packages=['sphinxprettysearchresults'],
+    version='0.1.1',
     description='Decently styled search results for sphinx-doc projects',
     author='Timotheus Kampik',
     author_email='timotheus.kampik@gmail.com',

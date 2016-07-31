@@ -10,7 +10,7 @@ setuptools.setup(
     author_email='timotheus.kampik@gmail.com',
     url='https://github.com/TimKam/sphinx-pretty-searchresults',
     platforms=["any"],
-    license="BSD",
+    license="MIT",
     zip_safe=False,
     install_requires=[],
     classifiers=[

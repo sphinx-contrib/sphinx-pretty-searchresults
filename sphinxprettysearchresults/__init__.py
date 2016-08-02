@@ -10,7 +10,8 @@ def remove_markup():
            "\~\~*|"
            "\^\^*|"
            "\-\-*|"
-           "(\[image\])*")
+           "(\[image\])*"
+           "(\[Bild\])*")
 
     for subdir, dirs, files in os.walk('../_build_txt'):
         for file in files:
@@ -25,7 +26,7 @@ def remove_markup():
                 move(file, path)
 
 
-def clean_txts(path, language, outdir):
+def clean_txts(path, language, srcdir, outdir):
     sys.path.append(path)
 
     sources_path =  outdir + '/_sources'
@@ -36,8 +37,11 @@ def clean_txts(path, language, outdir):
     if not os.path.isdir(sources_build_path):
         os.makedirs(sources_build_path)
 
-    build_txt = subprocess.Popen(['sphinx-build', '-a', '-b', 'text','-D' 'language=' + language,\
-                                   '.', sources_build_path])
+    if not language:
+        language = 'en'
+
+    build_txt = subprocess.Popen(['sphinx-build', '-a', '-b', 'text','-D' 'language=' + language, \
+                                  srcdir, sources_build_path])
     build_txt.wait()
     remove_markup()
     shutil.move(sources_build_path, sources_path)
@@ -46,7 +50,7 @@ def clean_txts(path, language, outdir):
 def build_search_snippets(app, docname):
     if app.builder.name == 'html':
         project_path = os.path.dirname(os.path.realpath('%s/..' % __file__))
-        clean_txts(project_path, app.config.language, app.outdir)
+        clean_txts(project_path, app.config.language, app.srcdir, app.outdir)
 
 
 def setup(app):

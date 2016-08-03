@@ -26,10 +26,8 @@ def remove_markup():
                 move(file, path)
 
 
-def clean_txts(path, language, srcdir, outdir):
-    sys.path.append(path)
-
-    sources_path =  outdir + '/_sources'
+def clean_txts(language, srcdir, outdir):
+    sources_path = outdir + '/_sources'
     sources_build_path = '../_build_txt'
     if os.path.isdir(sources_path):
         shutil.rmtree(sources_path)
@@ -40,6 +38,9 @@ def clean_txts(path, language, srcdir, outdir):
     if not language:
         language = 'en'
 
+    if isinstance(srcdir, unicode):
+        srcdir = srcdir.encode('UTF-8')
+
     build_txt = subprocess.Popen(['sphinx-build', '-a', '-b', 'text','-D' 'language=' + language, \
                                   srcdir, sources_build_path])
     build_txt.wait()
@@ -49,8 +50,7 @@ def clean_txts(path, language, srcdir, outdir):
 
 def build_search_snippets(app, docname):
     if app.builder.name == 'html':
-        project_path = os.path.dirname(os.path.realpath('%s/..' % __file__))
-        clean_txts(project_path, app.config.language, app.srcdir, app.outdir)
+        clean_txts(app.config.language, app.srcdir, app.outdir)
 
 
 def setup(app):

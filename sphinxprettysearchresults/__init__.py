@@ -27,8 +27,15 @@ def remove_markup():
 
 
 def clean_txts(language, srcdir, outdir):
+    if isinstance(outdir, unicode):
+        outdir = outdir.encode('UTF-8')
+
+    if isinstance(srcdir, unicode):
+        srcdir = srcdir.encode('UTF-8')
+
     sources_path = outdir + '/_sources'
-    sources_build_path = '../_build_txt'
+    sources_build_path = '_build_txt'
+
     if os.path.isdir(sources_path):
         shutil.rmtree(sources_path)
 
@@ -37,9 +44,6 @@ def clean_txts(language, srcdir, outdir):
 
     if not language:
         language = 'en'
-
-    if isinstance(srcdir, unicode):
-        srcdir = srcdir.encode('UTF-8')
 
     build_txt = subprocess.Popen(['sphinx-build', '-a', '-b', 'text','-D' 'language=' + language, \
                                   srcdir, sources_build_path])

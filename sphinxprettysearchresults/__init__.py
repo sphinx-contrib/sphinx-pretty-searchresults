@@ -1,5 +1,10 @@
 import os, re, shutil, subprocess, sys
 from shutil import move
+import pprint
+
+import docutils.nodes
+
+from docutils.nodes import table, comment, title, Text, NodeVisitor, SkipNode
 
 
 def remove_markup():
@@ -13,7 +18,7 @@ def remove_markup():
            "(\[image\])*"
            "(\[Bild\])*")
 
-    for subdir, dirs, files in os.walk('../_build_txt'):
+    for subdir, dirs, files in os.walk('_build_txt'):
         for file in files:
             if file.endswith('.txt'):
                 path = os.path.join(subdir, file)
@@ -57,5 +62,13 @@ def build_search_snippets(app, docname):
         clean_txts(app.config.language, app.srcdir, app.outdir)
 
 
+def remove_text_markup(app, doctree, docname):
+    if app.builder.name == 'text':
+        for node in doctree.traverse(table):
+            newnode = docutils.nodes.line('', node.astext())
+            node.replace_self(newnode)
+
+
 def setup(app):
     app.connect('build-finished', build_search_snippets)
+    app.connect('doctree-resolved', remove_text_markup)

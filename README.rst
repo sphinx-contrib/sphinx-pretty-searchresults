@@ -26,3 +26,17 @@ Add ``sphinxprettysearchresults`` to the ``extensions`` array in your ``conf.py`
    ]
 
 After your next build, your project will no longer display raw markup in the search result excerpts.
+
+
+Testing
+-------
+*Sphinx: pretty search results* uses `nose <https://github.com/nose-devs/nose>`__ as a test framework.
+
+To run the tests, you first need to install the dev dependencies::
+
+    pip install -r pip install -r dev_requirements.txt
+
+Then, navigate to the ``tests`` directory and run::
+
+    python run.py
+

@@ -1,7 +1,9 @@
-import os, shutil, subprocess
-import docutils.nodes
+import shutil, subprocess
+import docutils
 
-from docutils.nodes import table, header, image, figure, title, emphasis, strong
+from docutils import nodes
+
+from docutils.nodes import *
 
 
 def clean_txts(language, srcdir, outdir):
@@ -41,13 +43,18 @@ def remove_text_markup(app, doctree, docname):
             + doctree.traverse(header)\
             + doctree.traverse(title)\
             + doctree.traverse(emphasis)\
-            + doctree.traverse(strong)
+            + doctree.traverse(strong) \
+            + doctree.traverse(list_item) \
+            + doctree.traverse(reference)
         for node in nodes_to_replace:
-            newnode = docutils.nodes.line('', node.astext())
+            newnode = paragraph()
+            newnode.append(line('', node.astext()))
             node.replace_self(newnode)
 
         nodes_to_remove = doctree.traverse(figure)\
-            + doctree.traverse(image)
+            + doctree.traverse(image)\
+            + doctree.traverse(compound)
+
         for node in nodes_to_remove:
             node.replace_self(docutils.nodes.line('',''))
 

@@ -23,3 +23,22 @@ Lorem ipsum
 
 .. image:: test.png
    :alt: image
+
+* list item star
+
+- list item dash
+
+1. list item number
+
+#. list item auto number
+
+.. glossary::
+
+   term1
+      term1 definition
+
+:term:`term1`
+
+.. toctree::
+
+   toctree_item

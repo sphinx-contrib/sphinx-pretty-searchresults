@@ -38,3 +38,18 @@ def test_image():
 def test_table():
     assert lines[12] == '    cell1/1  cell1/2  cell2/1  cell2/2', '%s !=\
         "    cell1/1  cell1/2  cell2/1  cell2/2"' % (lines[10])
+
+
+def test_toc():
+    assert any('toctree_item' in line for line in lines) == False, '"toctree_item" is in line in lines'
+
+
+def test_list_item():
+    assert lines[15] == 'list item star', '%s != "list item star"' % (lines[15])
+    assert lines[17] == 'list item dash', '%s != "list item dash"' % (lines[17])
+    assert lines[19] == 'list item number', '%s != "list item number"' % (lines[19])
+    assert lines[21] == 'list item auto number', '%s != "list item auto number"' % (lines[21])
+
+
+def test_term():
+    assert lines[26] == 'term1', '%s != "Level 1 Heading"' % (lines[26])

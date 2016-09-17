@@ -1,3 +1,7 @@
+.. image:: https://travis-ci.org/TimKam/sphinx-pretty-searchresults.svg?branch=master
+    :target: https://travis-ci.org/TimKam/sphinx-pretty-searchresults
+
+
 Sphinx: pretty search results
 =============================
 *Sphinx: pretty search results* is an extension for the `Sphinx documentation tool <http://www.sphinx-doc.org/en/stable/>`__.

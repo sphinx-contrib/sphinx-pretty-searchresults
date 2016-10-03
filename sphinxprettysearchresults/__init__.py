@@ -7,10 +7,10 @@ from docutils.nodes import *
 
 
 def clean_txts(language, srcdir, outdir):
-    if isinstance(outdir, unicode):
+    if not isinstance(outdir, str) and isinstance(outdir, unicode):
         outdir = outdir.encode('UTF-8')
 
-    if isinstance(srcdir, unicode):
+    if not isinstance(srcdir, str) and isinstance(srcdir, unicode):
         srcdir = srcdir.encode('UTF-8')
 
     sources_path = outdir + '/_sources'

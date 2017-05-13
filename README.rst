@@ -19,8 +19,6 @@ Run ``pip install sphinxprettysearchresults``.
 
 Configuration
 -------------
-There are no custom configuration variables for the *Sphinx: pretty search results* extension.
-
 After installing the extension, all you need to do is to register it.
 
 Add ``sphinxprettysearchresults`` to the ``extensions`` array in your ``conf.py`` file, for example::
@@ -30,6 +28,15 @@ Add ``sphinxprettysearchresults`` to the ``extensions`` array in your ``conf.py`
    ]
 
 After your next build, your project will no longer display raw markup in the search result excerpts.
+
+Since version 1.5.0, Sphinx is adding the source file extension to the source files it includes in the output folder.
+For example, when your source file extension is `rst` (specified in the config variable `source_suffix` as `[.rst]`,
+your index file appears in the output's source folder as `index.rst.txt`. If you use a Sphinx version lower than 1.5.0,
+it appears as `index.txt`. *Sphinx: pretty search results* considers this difference and changes its behavior according
+to your Sphinx version. However, if you use a Sphinx theme that expects the old file names although you are using a
+later Sphinx version, you can fall back to the old file names by setting the following configuration variable::
+
+   use_old_search_snippets = True
 
 
 Testing

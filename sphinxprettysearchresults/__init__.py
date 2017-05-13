@@ -1,4 +1,4 @@
-import shutil, subprocess
+import os, pkg_resources, shutil, subprocess
 import docutils
 
 from docutils import nodes
@@ -6,7 +6,7 @@ from docutils import nodes
 from docutils.nodes import *
 
 
-def clean_txts(language, srcdir, outdir):
+def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets):
     if not isinstance(outdir, str) and isinstance(outdir, unicode):
         outdir = outdir.encode('UTF-8')
 
@@ -27,13 +27,23 @@ def clean_txts(language, srcdir, outdir):
 
     build_txt = subprocess.Popen(['sphinx-build', '-a', '-b', 'text','-D' 'language=' + language, \
                                   srcdir, sources_build_path])
+
     build_txt.wait()
+
     shutil.move(sources_build_path, sources_path)
+
+    if pkg_resources.get_distribution("sphinx").version >= "1.5.0" and not use_old_search_snippets:
+        for root, dirs, files in os.walk(sources_path):
+            for file in files:
+                if source_suffix == '.txt':
+                    source_suffix = ''
+                os.rename(os.path.join(root, file), os.path.join(root, file.replace('.txt', source_suffix + '.txt')))
 
 
 def build_search_snippets(app, docname):
     if app.builder.name == 'html':
-        clean_txts(app.config.language, app.srcdir, app.outdir)
+        source_suffix = app.config.source_suffix[0]
+        clean_txts(app.config.language, app.srcdir, app.outdir, source_suffix, app.config.use_old_search_snippets)
 
 
 def remove_text_markup(app, doctree, docname):
@@ -60,5 +70,6 @@ def remove_text_markup(app, doctree, docname):
 
 
 def setup(app):
+    app.add_config_value('use_old_search_snippets', False, 'html')
     app.connect('build-finished', build_search_snippets)
     app.connect('doctree-resolved', remove_text_markup)

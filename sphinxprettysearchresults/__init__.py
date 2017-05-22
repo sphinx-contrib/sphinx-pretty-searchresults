@@ -5,6 +5,8 @@ from docutils import nodes
 
 from docutils.nodes import *
 
+from sphinx.jinja2glue import SphinxFileSystemLoader
+
 
 def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets):
     if not isinstance(outdir, str) and isinstance(outdir, unicode):
@@ -17,7 +19,7 @@ def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets)
     sources_build_path = '_build_txt'
 
     if os.path.isdir(sources_path):
-        shutil.rmtree(sources_path)
+        shutil.move(sources_path, outdir + '/_raw_sources')
 
     if not os.path.isdir(sources_build_path):
         os.makedirs(sources_build_path)
@@ -69,7 +71,14 @@ def remove_text_markup(app, doctree, docname):
             node.replace_self(docutils.nodes.line('',''))
 
 
+def add_custom_source_link(app):
+    # load custom source link template
+    if app.builder.name == 'html':
+        app.builder.templates.loaders.insert(0, SphinxFileSystemLoader(os.path.dirname(__file__)))
+
+
 def setup(app):
     app.add_config_value('use_old_search_snippets', False, 'html')
     app.connect('build-finished', build_search_snippets)
     app.connect('doctree-resolved', remove_text_markup)
+    app.connect('builder-inited', add_custom_source_link)

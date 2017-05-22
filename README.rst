@@ -4,7 +4,8 @@
 
 Sphinx: pretty search results
 =============================
-*Sphinx: pretty search results* is an extension for the `Sphinx documentation tool <http://www.sphinx-doc.org/en/stable/>`__.
+*Sphinx: pretty search results* is an extension for the
+`Sphinx documentation tool <http://www.sphinx-doc.org/en/stable/>`__.
 
 To display search results, Sphinx is fetching the source files of search hits and rendering excerpts in raw markup
 (`Example <http://www.sphinx-doc.org/en/stable/search.html?q=quickstart&check_keywords=yes&area=default>`__).
@@ -39,9 +40,18 @@ later Sphinx version, you can fall back to the old file names by setting the fol
    use_old_search_snippets = True
 
 
+Source links
+------------
+By default Sphinx copies the source files into the build's `_sources` directory and uses it for both search snippets and
+- if `activated <http://www.sphinx-doc.org/en/stable/config.html#confval-html_show_sourcelink>`_ - source links.
+*Sphinx: pretty search results* uses the `_sources` directory for the prettified text snippets and moves the raw sources
+(for the source links) into its own `_raw_sources` directory. On build time, it overwrites the `sourcelink.html`
+template to reference the files in `_raw_sources`. This means you cannot use the extension with a custom
+`sourcelink.html` template.
+
 Testing
 -------
-*Sphinx: pretty search results* uses `nose <https://github.com/nose-devs/nose>`__ as a test framework.
+*Sphinx: pretty search results* uses `nose <https://github.com/nose-devs/nose>`__ as its test framework.
 
 To run the tests, you first need to install the dev dependencies::
 

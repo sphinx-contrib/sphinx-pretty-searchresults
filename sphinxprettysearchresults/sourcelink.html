@@ -1,0 +1,13 @@
+{#
+    because we now have actual and prettified sources,
+    this plugin introduces a custom source link that points to the new location of the non-prettified sources
+#}
+{%- if show_source and has_source and sourcename %}
+  <div role="note" aria-label="source link">
+    <h3>{{ _('This Page') }}</h3>
+    <ul class="this-page-menu">
+      <li><a href="{{ pathto('_raw_sources/' + sourcename, true)|e }}"
+            rel="nofollow">{{ _('Show Source') }}</a></li>
+    </ul>
+   </div>
+{%- endif %}

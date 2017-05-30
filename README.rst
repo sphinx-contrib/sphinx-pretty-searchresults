@@ -46,8 +46,8 @@ By default Sphinx copies the source files into the build's `_sources` directory 
 - if `activated <http://www.sphinx-doc.org/en/stable/config.html#confval-html_show_sourcelink>`_ - source links.
 *Sphinx: pretty search results* uses the `_sources` directory for the prettified text snippets and moves the raw sources
 (for the source links) into its own `_raw_sources` directory. On build time, it overwrites the `sourcelink.html`
-template to reference the files in `_raw_sources`. This means you cannot use the extension with a custom
-`sourcelink.html` template.
+template to reference the files in `_raw_sources`. If you want to use the extension with a custom source link, you need
+to adjust it to point to `_raw_sources` instead of `_sources`.
 
 Testing
 -------

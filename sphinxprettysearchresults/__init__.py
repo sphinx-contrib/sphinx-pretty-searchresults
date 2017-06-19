@@ -18,6 +18,9 @@ def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets)
     sources_path = outdir + '/_sources'
     sources_build_path = '_build_txt'
 
+    if os.path.isdir(outdir + '/_raw_sources'):
+        shutil.rmtree(outdir + '/_raw_sources')
+
     if os.path.isdir(sources_path):
         shutil.move(sources_path, outdir + '/_raw_sources')
 

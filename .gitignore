@@ -3,4 +3,4 @@
 .idea/
 venv/
 dist/
-tests/root/_build
+tests/**/_build

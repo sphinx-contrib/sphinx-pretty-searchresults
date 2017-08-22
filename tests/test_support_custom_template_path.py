@@ -8,7 +8,7 @@ from sphinx_testing import with_app
 )
 def test_support_custom_template_path(app, status, warning):
     app.build()
-    with open(app.outdir + '/index.txt') as f:
+    with open(app.outdir + '/_sources/index.rst.txt') as f:
         lines = f.readlines()
         lines = [line.replace('\n', '').replace('\r', '') for line in lines]
 

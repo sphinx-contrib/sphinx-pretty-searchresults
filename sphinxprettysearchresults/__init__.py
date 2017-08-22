@@ -1,4 +1,4 @@
-import os, pkg_resources, shutil, subprocess
+import pkg_resources, shutil, subprocess
 import docutils
 
 from docutils import nodes
@@ -75,9 +75,20 @@ def remove_text_markup(app, doctree, docname):
 
 
 def add_custom_source_link(app):
-    # load custom source link template
     if app.builder.name == 'html':
-        app.builder.templates.loaders.insert(0, SphinxFileSystemLoader(os.path.dirname(__file__)))
+        template_index = None
+        index = None
+        for template_set in app.builder.templates.loaders:
+            if index is None:
+                index = 0
+            else:
+                index =+ 1
+            if 'sourcelink.html' in template_set.list_templates():
+                template_index = index
+                break
+        if index is not None:
+            app.builder.templates.loaders.insert(
+                template_index, SphinxFileSystemLoader(os.path.dirname(__file__)))
 
 
 def setup(app):

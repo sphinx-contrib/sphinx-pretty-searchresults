@@ -55,7 +55,7 @@ Testing
 
 To run the tests, you first need to install the dev dependencies::
 
-    pip install -r pip install -r dev_requirements.txt
+    pip install -r dev_requirements.txt
 
 Then, navigate to the ``tests`` directory and run::
 

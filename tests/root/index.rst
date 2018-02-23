@@ -3,6 +3,7 @@ Level 1 Heading
 
 Lorem ipsum
 
+---------------
 Level 2 Heading
 ---------------
 
@@ -38,6 +39,8 @@ Lorem ipsum
       term1 definition
 
 :term:`term1`
+
+----
 
 .. toctree::
 

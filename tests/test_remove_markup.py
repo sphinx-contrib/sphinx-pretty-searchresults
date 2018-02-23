@@ -28,11 +28,11 @@ def test_emphasis():
 
 
 def test_figure():
-    assert any('figure' in line for line in lines) == False, '"figure" is in line in lines'
+    assert any('figure' in line for line in lines) is False, '"figure" is in line in lines'
 
 
 def test_image():
-    assert any('image' in line for line in lines) == False, '"image" is in line in lines'
+    assert any('image' in line for line in lines) is False, '"image" is in line in lines'
 
 
 def test_table():
@@ -41,7 +41,7 @@ def test_table():
 
 
 def test_toc():
-    assert any('toctree_item' in line for line in lines) == False, '"toctree_item" is in line in lines'
+    assert any('toctree_item' in line for line in lines) is False, '"toctree_item" was not removed'
 
 
 def test_list_item():
@@ -52,4 +52,8 @@ def test_list_item():
 
 
 def test_term():
-    assert lines[26] == 'term1', '%s != "Level 1 Heading"' % (lines[26])
+    assert lines[26] == 'term1', '%s != "term1"' % (lines[26])
+
+def test_transition():
+    transition = '======================================================================'
+    assert any(transition in line for line in lines) is False, 'transition was not removed'

@@ -58,13 +58,14 @@ def remove_text_markup(app, doctree, docname):
             + doctree.traverse(header)\
             + doctree.traverse(title)\
             + doctree.traverse(emphasis)\
-            + doctree.traverse(strong) \
-            + doctree.traverse(list_item) \
-            + doctree.traverse(reference)
+            + doctree.traverse(strong)\
+            + doctree.traverse(list_item)\
+            + doctree.traverse(reference) \
+            + doctree.traverse(transition)
         for node in nodes_to_replace:
-            newnode = paragraph()
-            newnode.append(line('', node.astext()))
-            node.replace_self(newnode)
+            new_node = paragraph()
+            new_node.append(line('', node.astext()))
+            node.replace_self(new_node)
 
         nodes_to_remove = doctree.traverse(figure)\
             + doctree.traverse(image)\

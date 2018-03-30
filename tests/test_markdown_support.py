@@ -11,7 +11,7 @@ def setup(app, status, warning):
     global out_dir
     out_dir = app.outdir
     app.build()
-    with open(app.outdir + '/_sources/markdown.md.txt') as f:
+    with open(app.outdir + '/_sources/subfolder/markdown.md.txt') as f:
         lines = f.readlines()
         lines = [line.replace('\n', '').replace('\r', '') for line in lines]
 
@@ -21,7 +21,7 @@ def test_file_ending():
     In any case the test could fail, the setup will fail first;
     still let's keep it for the sake of documentation
     """
-    assert os.path.isfile(out_dir + '/_sources/markdown.md.txt') is True
+    assert os.path.isfile(out_dir + '/_sources/subfolder/markdown.md.txt') is True
 
 
 def test_markup():

@@ -1,3 +1,3 @@
 .. toctree::
 
-   markdown
+   subfolder/markdown

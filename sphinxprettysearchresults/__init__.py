@@ -7,8 +7,10 @@ from docutils.nodes import *
 
 from sphinx.jinja2glue import SphinxFileSystemLoader
 
+file_ending_dict = {}
 
-def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets):
+
+def clean_txts(language, srcdir, outdir, source_suffixes, use_old_search_snippets):
     if not isinstance(outdir, str) and isinstance(outdir, unicode):
         outdir = outdir.encode('UTF-8')
 
@@ -40,19 +42,32 @@ def clean_txts(language, srcdir, outdir, source_suffix, use_old_search_snippets)
     if pkg_resources.get_distribution("sphinx").version >= "1.5.0" and not use_old_search_snippets:
         for root, dirs, files in os.walk(sources_path):
             for file in files:
-                if source_suffix == '.txt':
-                    source_suffix = ''
+                # determine correct suffix
+                if file.endswith('.txt'):
+                    source_suffix = None
+                    for suffix in source_suffixes:
+                        source_root = root.replace(sources_path, srcdir)
+                        if os.path.isfile(source_root + '/' + file.replace('.txt', suffix)):
+                            if suffix == '.txt':
+                                source_suffix = ''
+                            else:
+                                source_suffix = suffix
+                            break
+
                 os.rename(os.path.join(root, file), os.path.join(root, file.replace('.txt', source_suffix + '.txt')))
 
 
 def build_search_snippets(app, docname):
     if app.builder.name == 'html':
-        source_suffix = app.config.source_suffix[0]
-        clean_txts(app.config.language, app.srcdir, app.outdir, source_suffix, app.config.use_old_search_snippets)
+        source_suffixes = app.config.source_suffix
+        clean_txts(app.config.language, app.srcdir, app.outdir, source_suffixes, app.config.use_old_search_snippets)
+
 
 
 def remove_text_markup(app, doctree, docname):
     if app.builder.name == 'text':
+
+        file_ending_dict[docname] = app.env.doc2path(docname).rsplit('.', 1)[1]
 
         nodes_to_replace = doctree.traverse(table)\
             + doctree.traverse(header)\

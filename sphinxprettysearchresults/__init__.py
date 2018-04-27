@@ -7,6 +7,10 @@ from docutils.nodes import *
 
 from sphinx.jinja2glue import SphinxFileSystemLoader
 
+supported_builders = [
+    'dirhtml',
+    'html'
+]
 file_ending_dict = {}
 
 
@@ -58,7 +62,7 @@ def clean_txts(language, srcdir, outdir, source_suffixes, use_old_search_snippet
 
 
 def build_search_snippets(app, docname):
-    if app.builder.name == 'html':
+    if app.builder.name in supported_builders:
         source_suffixes = app.config.source_suffix
         clean_txts(app.config.language, app.srcdir, app.outdir, source_suffixes, app.config.use_old_search_snippets)
 
@@ -91,7 +95,7 @@ def remove_text_markup(app, doctree, docname):
 
 
 def add_custom_source_link(app):
-    if app.builder.name == 'html':
+    if app.builder.name in supported_builders:
         template_index = None
         index = None
         for template_set in app.builder.templates.loaders:

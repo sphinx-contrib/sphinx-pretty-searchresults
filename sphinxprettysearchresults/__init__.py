@@ -48,17 +48,15 @@ def clean_txts(language, srcdir, outdir, source_suffixes, use_old_search_snippet
             for file in files:
                 # determine correct suffix
                 if file.endswith('.txt'):
-                    source_suffix = None
+                    source_suffix = ''
                     for suffix in source_suffixes:
                         source_root = root.replace(sources_path, srcdir)
-                        if os.path.isfile(source_root + '/' + file.replace('.txt', suffix)):
-                            if suffix == '.txt':
-                                source_suffix = ''
-                            else:
+                        if os.path.isfile(source_root + '/' + file[:-4] + suffix):
+                            if not suffix == '.txt':
                                 source_suffix = suffix
                             break
 
-                os.rename(os.path.join(root, file), os.path.join(root, file.replace('.txt', source_suffix + '.txt')))
+                os.rename(os.path.join(root, file), os.path.join(root, file[:-4] + source_suffix + '.txt'))
 
 
 def build_search_snippets(app, docname):

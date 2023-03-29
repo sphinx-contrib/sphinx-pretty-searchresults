@@ -1,5 +1,6 @@
 import pkg_resources, shutil, subprocess
 import docutils
+import os
 
 from docutils import nodes
 
